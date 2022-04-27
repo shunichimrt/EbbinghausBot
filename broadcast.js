@@ -1,16 +1,3 @@
-/** LINE Developers Info */
-var access_token =
-  PropertiesService.getScriptProperties().getProperty("ACCESS_TOKEN");
-var line_endpoint = "https://api.line.me/v2/bot/message/reply";
-
-/** スプレッドシート */
-var SPREADSHEET_ID =
-  PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID");
-var SPREADSHEET_NAME =
-  PropertiesService.getScriptProperties().getProperty("SPREADSHEET_NAME");
-var targetSht =
-  SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SPREADSHEET_NAME);
-
 /**
  * 対象メッセージを取得
  * @param {
@@ -47,7 +34,9 @@ function checkRef() {
  */
 function checkDeleteFlg(i) {
   var flg = targetSht.getRange(i, 3).getValue();
-  targetSht.deleteRow(i);
+  if (flg === 3) {
+    targetSht.deleteRow(i);
+  }
 }
 
 /**
