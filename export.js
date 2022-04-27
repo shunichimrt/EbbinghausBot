@@ -38,4 +38,7 @@ function doPost(e) {
   targetSht
     .getRange("A" + targetRow + ":C" + targetRow)
     .setHorizontalAlignment("left");
+  targetSht
+    .getRange("A" + targetRow + ":C" + targetRow)
+    .setVerticalAlignment("middle");
 }
