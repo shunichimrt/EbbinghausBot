@@ -1,9 +1,13 @@
 /** LINE Developers Info */
-var access_token = ACCESS_TOKEN;
+var access_token =
+  PropertiesService.getScriptProperties().getProperty("ACCESS_TOKEN");
 var line_endpoint = "https://api.line.me/v2/bot/message/reply";
 
 /** スプレッドシート */
-var SPREADSHEET_ID = SPREADSHEET_ID;
+var SPREADSHEET_ID =
+  PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID");
+var SPREADSHEET_NAME =
+  PropertiesService.getScriptProperties().getProperty("SPREADSHEET_NAME");
 var targetSht =
   SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SPREADSHEET_NAME);
 
@@ -16,8 +20,22 @@ var targetSht =
  */
 function checkRef() {
   /** メッセージを取得 */
-  var message = targetSht.getRange("B7").getValue();
-  broadcast(message);
+  for (var i = 2; i < 500; i++) {
+    var date = targetSht.getRange(i, 1).getValue();
+    var content = targetSht.getRange(i, 2).getValue();
+    var flg = targetSht.getRange(i, 3).getValue();
+    var dt = today - date;
+    var day = Math.ceil(dt / 1000 / 60 / 60 / 24);
+    if (
+      (2 <= day && day < 3) ||
+      (9 <= day && day < 10) ||
+      (39 <= day && day < 40)
+    ) {
+      broadcast(content);
+      targetSht.getRange(i, 3).setValue(flg++);
+      checkDeleteFlg(i);
+    }
+  }
 }
 
 /**
@@ -27,10 +45,9 @@ function checkRef() {
  *  C DELETE_FLG=3対象
  * }
  */
-function checkDeleteFlg() {
-  /** メッセージを取得 */
-  var message = targetSht.getRange("B7").getValue();
-  broadcast(message);
+function checkDeleteFlg(i) {
+  var flg = targetSht.getRange(i, 3).getValue();
+  targetSht.deleteRow(i);
 }
 
 /**
