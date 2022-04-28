@@ -5,6 +5,7 @@
  *  B メッセージ内容
  * }
  */
+var today = new Date();
 function checkRef() {
   /** メッセージを取得 */
   for (var i = 2; i < 500; i++) {
