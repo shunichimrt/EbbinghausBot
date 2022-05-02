@@ -20,23 +20,7 @@ function checkRef() {
       (39 <= day && day < 40)
     ) {
       broadcast(content);
-      targetSht.getRange(i, 3).setValue(flg++);
-      checkDeleteFlg(i);
     }
-  }
-}
-
-/**
- * ３回目の配信が終了しているものは削除
- * @param {
- *  B メッセージ内容
- *  C DELETE_FLG=3対象
- * }
- */
-function checkDeleteFlg(i) {
-  var flg = targetSht.getRange(i, 3).getValue();
-  if (flg === 3) {
-    targetSht.deleteRow(i);
   }
 }
 
